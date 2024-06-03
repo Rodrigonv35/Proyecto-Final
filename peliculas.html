@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <title>Peliculas API</title>
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/maputo');
+
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background-color: cadetblue;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+        header {
+            padding: 10px;
+            display: flex;
+            justify-content: flex-end;
+            background-color: darkslategrey;
+        }
+        #search {
+            background-color: bisque;
+            border: 2px solid black;
+            border-radius: 5px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;  
+            font-size: 15px; 
+            padding: 5px 3px; 
+            color: #fff;      
+        }
+        #search::placeholder {
+            color: black;
+        }
+        #search:focus {
+            outline: none;
+            background-color: darkcyan;
+        }
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .movie {
+            width: 300px;
+            margin: 10px;
+            background-color: #2e4860;
+            box-shadow: 0 5px 5px gray;
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+        .movie img {
+            width: 100%;
+        }
+        .movie-info {
+            color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 5px;
+            padding: 5px 10px 10px;
+            letter-spacing: 1px;
+        }
+        .movie-info h3 {
+            margin-top: 0;
+        }
+        .movie-info span {
+            background-color: #2e4860;
+            padding: 3px 1px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .movie-info span.green {
+            color: lightgreen;
+        }
+        .movie-info span.orange {
+            color: orange;
+        }
+        .movie-info span.red {
+            color: red;
+        }
+        .overview {
+            background-color: #ffffff;
+            padding: 20px;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            max-height: 100%;
+            transform: translateY(101%);
+            overflow-y: auto;
+            transition: transform 0.3s ease-in;
+            opacity: 80%;
+            color: #3d405b;
+        }
+        .movie:hover .overview{
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div style="margin: 10px;">
+        <nav class="navbar navbar-light" style="background-color: rgb(89, 97, 110);">
+            <div class="container">
+                <a class="navbar-brand" href="index.html" style="color: black; font-family: 'Maputo', sans-serif; font-size: xx-large;">Inicio</a>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Unidad 1</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                                <a class="dropdown-item" href="perfil.html">Perfil</a><br>
+                                <a class="dropdown-item" href="calculadora.html">Calculadora</a><br>
+                                <a class="dropdown-item" href="tienda.html">Tienda parte 1</a><br>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Unidad 2</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                <a class="dropdown-item" href="Deadpool.html">Tienda Pedido</a><br>
+                                <a class="dropdown-item" href="json.html">Json</a><br>
+                                <a class="dropdown-item" href="tienda pedido2.html">Tienda pedido parte 2</a><br>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Unidad 3</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
+                                <a class="dropdown-item" href="base de datos.html">Base de Datos</a><br>
+                                <a class="dropdown-item" href="peliculas.html">Peliculas</a><br>
+
+                                <a class="dropdown-item"
+                                href="pokemon.html">Pokedex</a><br>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <header>
+        <input type="text" id="search" class="search" placeholder="Buscar película">
+    </header>
+    <main id="main"></main>
+
+    <script>
+        const API_URL = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3fd2be6f0c70a2a598f084ddfb75487c&page=1'
+        const IMG_PATH = 'https://image.tmdb.org/t/p/w1280'
+        const SEARCH_API = 'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c70a2a598f084ddfb75487c&query='
+
+        const main = document.getElementById('main');
+        const form = document.createElement('form'); // Create form element
+        const search = document.getElementById('search');
+
+        // Obtención de las primeras películas
+        getMovies(API_URL);
+
+        async function getMovies(url) {
+            const res = await fetch(url); // Corrected typo "fearch" to "fetch"
+            const data = await res.json();
+            showMovies(data.results);
+        }
+
+        function showMovies(movies) {
+            main.innerHTML = "";
+
+            movies.forEach((movie) => {
+                const { title, poster_path, vote_average, overview } = movie;
+                const movieElement = document.createElement('div');
+                movieElement.classList.add('movie');
+                movieElement.innerHTML = `
+                    <img src="${IMG_PATH + poster_path}" alt="${title}">
+                    <div class="movie-info">
+                        <h3>${title}</h3>
+                        <span class="${getClassByRate(vote_average)}">${vote_average}</span>
+                    </div>
+                    <div class="overview">
+                        <h3>overview</h3>
+                        ${overview}
+                    </div>`;
+                main.appendChild(movieElement);
+            })
+        }
+
+        function getClassByRate(vote) {
+            if (vote >= 8) {
+                return "green";
+            } else if (vote >= 5) {
+                return "orange";
+            } else {
+                return "red";
+            }
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const searchterm = search.value;
+            if (searchterm && searchterm !== ``) {
+                getMovies(SEARCH_API + searchterm);
+                search.value = ``;
+            } else {
+                window.location.reload();
+            }
+        });
+    </script>
+    
+</body>
+</html>
+

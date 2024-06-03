@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <title>Pagina de rodrigo</title>
+</head>
+<body>
+    <div style="margin: 10px;">
+        <nav class="navbar navbar-light" style="background-color: rgb(74, 87, 105);">
+         <div class="container">
+           <a class="navbar-brand" href="index.html" style="color: black;                                                                     font-family: 'Maputo', sans-serif;
+           ; font-size: xx-large;">Inicio</a>
+           <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <style>
+              @import url('https://fonts.cdnfonts.com/css/maputo');
+            </style>
+  
+            
+            <ul class="nav navbar-nav">
+               <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                 data-toggle="dropdown"
+                 aria-haspopup="true"
+                 aria-expanded="false">Unidad 1</a>
+                <div class="dropdown-menu"
+                aria-labelledby="navbarDripdownMenuLink">
+                
+                <a class="dropdown-item"
+                href="perfil.html">Perfil</a><br>
+                
+                <a class="dropdown-item"
+                href="calculadora.html">Calculadora</a><br>
+                
+                <a class="dropdown-item"
+                href="tienda.html">Tienda parte 1</a><br>
+            </div></a>
+               </li>
+
+
+               <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                 data-toggle="dropdown"
+                 aria-haspopup="true"
+                 aria-expanded="false">Unidad 2</a>
+                <div class="dropdown-menu"
+                aria-labelledby="navbarDripdownMenuLink">
+                
+                <a class="dropdown-item"
+                href="Deadpool.html">Tienda Pedido</a><br>
+                
+                <a class="dropdown-item"
+                href="json.html">Json</a><br>
+                
+                <a class="dropdown-item"
+                href="tienda pedido2.html">Tienda pedido parte 2</a><br>
+            </div></a>
+               </li>
+
+
+               <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                 data-toggle="dropdown"
+                 aria-haspopup="true"
+                 aria-expanded="false">Unidad 3</a>
+                <div class="dropdown-menu"
+                aria-labelledby="navbarDripdownMenuLink">
+                
+                <a class="dropdown-item"
+                href="base de datos.html">Base de Datos</a><br>
+                
+                <a class="dropdown-item"
+                href="peliculas.html">Peliculas</a><br>
+
+                <a class="dropdown-item"
+                href="pokemon.html">Pokedex</a><br>
+            </div></a>
+                 
+               </li>
+            </ul>
+           </div>
+         </div>
+        </nav>
+
+    </div>
+    <div class="calc">
+        <input type="text" id="ans">
+        <div class="btn">
+            <input type="button" value="c" onclick="clean()">
+
+            <input type="button" value="%" onclick="solve('%')">
+      
+            <input type="button" value="←" onclick="back()">
+
+            <input type="button" value="/" onclick="solve('/')">
+
+            <br>
+            <input type="button" value="7" onclick="solve('7')">
+
+            <input type="button" value="8" onclick="solve('8')">
+
+            <input type="button" value="9" onclick="solve('9')">
+
+            <input type="button" value="x" onclick="solve('*')">
+
+            <br>
+            <input type="button" value="4" onclick="solve('4')">
+
+            <input type="button" value="5" onclick="solve('5')">
+
+            <input type="button" value="6" onclick="solve('6')">
+
+            <input type="button" value="-" onclick="solve('-')">
+            
+            <br>
+            <input type="button" value="1" onclick="solve('1')">
+            
+            <input type="button" value="2" onclick="solve('2')">
+
+            <input type="button" value="3" onclick="solve('3')">
+
+            <input type="button" value="+" onclick="solve('+')">
+
+            <br>
+            <input type="button" value="00" onclick="solve('00')">
+
+            <input type="button" value="0" onclick="solve('0')">
+
+            <input type="button" value="." onclick="solve('.')">
+
+            <input type="button" value="=" onclick="result()">
+
+            <br>
+        </div>
+    </div> 
+    <script>
+        const solve = (val) => {
+            const v=document.getElementById("ans");
+            v.value +=val;
+
+        }
+        const clean = () =>{
+         const   input=document.getElementById("ans");
+         input.value= ""; 
+
+        }
+        const result = () =>{
+            const v1 = document.getElementById("ans").value;
+            const v2 = eval (v1);
+            document.getElementById("ans").value=v2;
+        }
+        const back = () =>{
+         const   input=document.getElementById("ans");
+         input.value = input.value.slice(0,-1); 
+
+        }
+       
+    </script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing:border-box;
+        }
+        body{
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            display: grid;
+            place-items:center;
+            background: linear-gradient(to right, #5511c2, #16c416);
+            height: 100px;
+        }
+        .calc{
+            width: 26%;
+            height: 110%;
+            background-color: transparent;
+            position: absolute center;
+            border: 3px solid;
+            border-radius: 10px;
+        }
+        #ans{
+            width: 100%;
+            align-content: center;
+            margin-top: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            color: rgb(0, 0, 0);
+            text-align: right;
+        }
+        .btn input[type="button"]{
+         width: 70px;
+         padding: 2px;
+         margin: 4px;
+         position: relative;
+         left: 23px;
+         top: 20px;
+         height: 55px;
+         cursor: pointer;
+         font-size: 16px;
+         transition: all 0.5s ease;
+         background-color: transparent;
+         border-radius: 6px;
+
+        }
+        .btn input[type="button"]:hover{
+            background-color: rgb(49, 76, 196);
+            color: rgb(255, 255, 255);
+        }    
+    </style>
+</body>
+</html>
